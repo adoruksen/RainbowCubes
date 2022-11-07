@@ -4,17 +4,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public class LeftStacker : MonoBehaviour
+public class RightStacker : MonoBehaviour
 {
     [SerializeField] Canvas gameOverCanvas;
     [SerializeField] Transform target;
-    [SerializeField] GameObject[] emojis = new GameObject[4];//--------------
+    [SerializeField] GameObject[] emojis = new GameObject[4];
 
     public Stack<GameObject> stack; //LIFO
 
-    //NavMeshAgent navMesh;
+    NavMeshAgent navMesh;
     GameObject stackedCube;
-    AudioSource audioSource;//-------------------
+    AudioSource audioSource;
     Tween punchScaleTween;
     Color cubeColor;
     Renderer rend;
@@ -23,9 +23,10 @@ public class LeftStacker : MonoBehaviour
     Rigidbody rb;
     PlayerBaseOffset OnT;
 
-    Vector3 punchScale = new Vector3(.3f, .3f, .3f);//----------------
-    Vector3 addPosEmoji = new Vector3(-1f, 6f, 0f);///--------------
-    Vector3 trailPos = new Vector3(0f, -.5f,0f);//------------
+    Vector3 obstacleSize;
+    Vector3 punchScale = new Vector3(.3f, .3f, .3f);
+    Vector3 addPosEmoji = new Vector3(-1f, 6f, 0f);
+    Vector3 trailPos = new Vector3(0f, -.5f,0f);
 
     float xPos, yPos, zPos;
     float delayInSeconds = .5f;
@@ -45,12 +46,12 @@ public class LeftStacker : MonoBehaviour
 
         stack = new Stack<GameObject>();
 
-        //navMesh = GetComponent<NavMeshAgent>();
+        navMesh = GetComponent<NavMeshAgent>();
 
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
 
-        trail = GameObject.FindWithTag("TrailLeft");
+        trail = GameObject.FindWithTag("TrailRight");
         trailRend = trail.GetComponent<TrailRenderer>();
         trailRend.enabled = false;
 
@@ -61,15 +62,15 @@ public class LeftStacker : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("StackableCube"))
+        if (other.gameObject.tag == "StackableCube")
         {
             StackedCube(other);
-            //navMesh.baseOffset++;
+            navMesh.baseOffset++;
         }
 
-        else if (other.gameObject.CompareTag("ObstacleCube") || other.gameObject.CompareTag("Stair"))
+        else if (other.gameObject.tag == "ObstacleCube" || other.gameObject.tag == "Stair")
         {
-            //OnT.OnTriggerEnter(other);
+            OnT.OnTriggerEnter(other);
         }
     }
 
@@ -79,13 +80,12 @@ public class LeftStacker : MonoBehaviour
 
         stackedCube = other.gameObject;
         stack.Push(stackedCube);
-
+        
         SetPosition();
         stackedCube.transform.position = new Vector3(xPos, yPos, zPos);
-        //xpos y pos ve zpos sol kübün pozisyonu
         stackedCube.transform.parent = gameObject.transform;
         stackedCube.tag = "Untagged";
-
+        
         GetRandomEmoji();
         PunchScaleCube(other);
         SetTrailColor();
