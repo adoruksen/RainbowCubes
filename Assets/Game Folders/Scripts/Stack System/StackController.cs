@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class StackController : MonoBehaviour
+namespace StackSystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StackController : MonoBehaviour
     {
-        
-    }
+        public event Action<RainbowCube> OnStackAdded;
+        public event Action OnStackLost;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [ShowInInspector,ReadOnly,PropertyOrder(-1)] public int Stack { get; private set; }
+
+        public void AddStack(RainbowCube obj)
+        {
+            Stack++;
+            OnStackAdded?.Invoke(obj);
+        }
+
+        public void LoseStack()
+        {
+            Stack--;
+            OnStackLost?.Invoke();
+        }
     }
 }
+
