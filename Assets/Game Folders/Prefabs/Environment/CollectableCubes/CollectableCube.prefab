@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2432024308241807260}
   - component: {fileID: 2559949720894625847}
   - component: {fileID: 4198209343767755713}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CollectableCube
-  m_TagString: StackableCube
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0e6a5205b96604ca66d811bda3437b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 2559949720894625847}
 --- !u!1 &2152875855175310732
 GameObject:
   m_ObjectHideFlags: 0

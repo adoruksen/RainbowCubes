@@ -1,16 +1,31 @@
 using System;
 using Sirenix.OdinInspector;
 using InteractionSystem;
+using CharacterController = Character.CharacterController;
+using DG.Tweening;
 using UnityEngine;
 
 namespace StackSystem
 {
     public class RainbowCube : MonoBehaviour, IBeginInteract
     {
-        public event Action OnCollected;
-        [ShowInInspector, ReadOnly] public bool IsInteractable { get; private set; }
+        public event Action<CharacterController> OnCollected;
+        [ShowInInspector, ReadOnly] public bool IsInteractable { get; private set; } = true;
         [SerializeField] private Collider _collider;
 
+        private CharacterController _controller;
+
+        private Color _color;
+
+        private void OnEnable()
+        {
+            OnCollected += CharacterControllerStuff;
+            _color = GetComponentInChildren<Renderer>().material.color;
+        }
+        private void OnDisable()
+        {
+            OnCollected -= CharacterControllerStuff;
+        }
         public void OnInteractBegin(IInteractor interactor)
         {
             var controller = (Stacker)interactor;
@@ -19,10 +34,11 @@ namespace StackSystem
 
         private void Collect(Stacker controller)
         {
-            OnCollected?.Invoke();
             controller.AudioSource.Play();
             controller.StackController.AddStack(this);
-            controller.CharacterController.ModelTransformSetter();
+            OnCollected?.Invoke(controller.CharacterController);
+            controller.GetRandomEmoji();
+            controller.SetTrail(_color);
             SetInteractable(false);
         }
 
@@ -34,7 +50,14 @@ namespace StackSystem
         public void SetLost()
         {
             transform.SetParent(null);
-            SetInteractable(true);
+            CharacterControllerStuff(_controller);
+        }
+
+        private void CharacterControllerStuff(CharacterController controller)
+        {
+            _controller = controller;
+            _controller.ModelTransformSetter();
+            _controller.FailConditions();
         }
 
     }

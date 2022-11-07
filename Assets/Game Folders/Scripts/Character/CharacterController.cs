@@ -26,7 +26,7 @@ namespace Character
             Rigidbody = GetComponent<Rigidbody>();
             Movement = GetComponent<CharacterMovement>();
             ModelTransform = transform.GetChild(0).transform;
-            SetState(StackState);
+            SetState(IdleState);
         }
 
         private void FixedUpdate()
@@ -48,11 +48,15 @@ namespace Character
 
         public void ModelTransformSetter()
         {
-            if (leftStacker.StackController.Stack > rightStacker.StackController.Stack) ModelTransform.position = Vector3.up * leftStacker.StackController.Stack;
-            else if (rightStacker.StackController.Stack > leftStacker.StackController.Stack) ModelTransform.position = Vector3.up * rightStacker.StackController.Stack;
-            else ModelTransform.position = Vector3.up * rightStacker.StackController.Stack;
+            if (leftStacker.StackController.Stack > rightStacker.StackController.Stack) ModelTransform.position = new Vector3(transform.position.x, leftStacker.StackController.Stack +.75f, transform.position.z);
+            else if (rightStacker.StackController.Stack > leftStacker.StackController.Stack) ModelTransform.position = new Vector3(transform.position.x, rightStacker.StackController.Stack +.75f, transform.position.z);
+            else ModelTransform.position = new Vector3(transform.position.x, rightStacker.StackController.Stack + .75f, transform.position.z); ;
         }
 
+        public void FailConditions()
+        {
+            if (Mathf.Abs(leftStacker.StackController.Stack - rightStacker.StackController.Stack) >= 3) SetState(FinishState);
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace StackSystem
     public class StackVisualController : MonoBehaviour
     {
         private StackController _stackController;
+        [SerializeField] private Transform _modelTransform;
 
         [ShowInInspector] private readonly Stack<RainbowCube> _stackedObjects = new();
-        [SerializeField] private float _distance;
 
 
         private void Awake()
@@ -35,24 +36,29 @@ namespace StackSystem
         {
             _stackedObjects.Push(obj);
             var objTransform = obj.transform;
-            objTransform.SetParent(transform);
-            transform.localPosition = Vector3.up * (_stackController.Stack);
-            SetPosition(obj);
+            objTransform.SetParent(_modelTransform);
+            objTransform.DOPunchScale(Vector3.one * .25f, .5f, 1);
             objTransform.localRotation = Quaternion.identity;
+            _modelTransform.localPosition = new Vector3(_modelTransform.localPosition.x, _stackController.Stack, _modelTransform.localPosition.z);
+            SetPosition(obj);
         }
 
         private void UpdateVisualLost()
         {
             var obj = _stackedObjects.Pop();
-            obj.transform.DOScale(Vector3.zero, .2f).OnComplete(() =>
+            StartCoroutine(LostEnumerator());
+            IEnumerator LostEnumerator()
             {
-                obj.transform.localScale = Vector3.one;
-            });
+                obj.SetLost();
+                yield return new WaitForSeconds(.25f);
+                _modelTransform.localPosition = new Vector3(_modelTransform.localPosition.x, _modelTransform.localPosition.y - 1, _modelTransform.localPosition.z);
+            }
+            
         }
 
         private void SetPosition(RainbowCube obj)
         {
-            obj.transform.position = new Vector3(transform.position.x, transform.position.y - _stackController.Stack, transform.position.z);
+            obj.transform.position = new Vector3(transform.position.x, 0 , transform.position.z);
         }
     }
 }
