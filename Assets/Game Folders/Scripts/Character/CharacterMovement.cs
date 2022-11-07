@@ -1,18 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+namespace Character
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CharacterMovement : MonoBehaviour
     {
-        
-    }
+        private Rigidbody _rigidbody;
+        public float moveSpeed;
+        public bool IsActive;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public bool UseBounds;
+        public Bounds Bounds;
+
+        private InputManager _input;
+
+        private void Start()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            _input = InputManager.Instance;
+        }
+
+        public void Move()
+        {
+            if (!IsActive) return;
+
+            var playerMove = new Vector3(_input.XPos, 0, 1);
+            playerMove = playerMove.normalized * moveSpeed * Time.fixedDeltaTime;
+            _rigidbody.MovePosition(_rigidbody.position + playerMove);
+
+            //var movement = direction * moveSpeed;
+            //_rigidbody.velocity = movement;
+        }
     }
 }
+

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrailRendererLeftSC : MonoBehaviour
@@ -14,6 +12,6 @@ public class TrailRendererLeftSC : MonoBehaviour
 
     void Update() 
     {
-        stackerCube.SetPosition();
+        //stackerCube.SetPosition();
     }
 }

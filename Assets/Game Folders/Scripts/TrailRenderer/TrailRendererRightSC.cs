@@ -14,6 +14,6 @@ public class TrailRendererRightSC : MonoBehaviour
 
     void Update() 
     {
-        stackerCube.SetPosition();
+        //stackerCube.SetPosition();
     }
 }

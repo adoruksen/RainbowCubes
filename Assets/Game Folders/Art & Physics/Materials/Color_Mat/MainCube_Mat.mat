@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: f8d49205b3b0a644195633020367689d, type: 3}
   m_ValidKeywords:
   - TCP2_DISABLE_WRAPPED_LIGHT
+  - _EMISSION
   m_InvalidKeywords:
   - TCP2_MOBILE
   - TCP2_REFLECTIONS_FRESNEL

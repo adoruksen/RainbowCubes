@@ -12,7 +12,7 @@ public class RightStacker : MonoBehaviour
 
     public Stack<GameObject> stack; //LIFO
 
-    NavMeshAgent navMesh;
+    //NavMeshAgent navMesh;
     GameObject stackedCube;
     AudioSource audioSource;
     Tween punchScaleTween;
@@ -46,7 +46,7 @@ public class RightStacker : MonoBehaviour
 
         stack = new Stack<GameObject>();
 
-        navMesh = GetComponent<NavMeshAgent>();
+        //navMesh = GetComponent<NavMeshAgent>();
 
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
@@ -65,12 +65,12 @@ public class RightStacker : MonoBehaviour
         if (other.gameObject.tag == "StackableCube")
         {
             StackedCube(other);
-            navMesh.baseOffset++;
+            //navMesh.baseOffset++;
         }
 
         else if (other.gameObject.tag == "ObstacleCube" || other.gameObject.tag == "Stair")
         {
-            OnT.OnTriggerEnter(other);
+            //OnT.OnTriggerEnter(other);
         }
     }
 

@@ -12,7 +12,7 @@ public class LeftStacker : MonoBehaviour
 
     public Stack<GameObject> stack; //LIFO
 
-    NavMeshAgent navMesh;
+    //NavMeshAgent navMesh;
     GameObject stackedCube;
     AudioSource audioSource;
     Tween punchScaleTween;
@@ -45,7 +45,7 @@ public class LeftStacker : MonoBehaviour
 
         stack = new Stack<GameObject>();
 
-        navMesh = GetComponent<NavMeshAgent>();
+        //navMesh = GetComponent<NavMeshAgent>();
 
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
@@ -61,15 +61,15 @@ public class LeftStacker : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "StackableCube")
+        if (other.gameObject.CompareTag("StackableCube"))
         {
             StackedCube(other);
-            navMesh.baseOffset++;
+            //navMesh.baseOffset++;
         }
 
-        else if (other.gameObject.tag == "ObstacleCube" || other.gameObject.tag == "Stair")
+        else if (other.gameObject.CompareTag("ObstacleCube") || other.gameObject.CompareTag("Stair"))
         {
-            OnT.OnTriggerEnter(other);
+            //OnT.OnTriggerEnter(other);
         }
     }
 
@@ -82,6 +82,7 @@ public class LeftStacker : MonoBehaviour
 
         SetPosition();
         stackedCube.transform.position = new Vector3(xPos, yPos, zPos);
+        //xpos y pos ve zpos sol kübün pozisyonu
         stackedCube.transform.parent = gameObject.transform;
         stackedCube.tag = "Untagged";
 

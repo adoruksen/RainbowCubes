@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,7 +37,7 @@ public class PlayerBaseOffset : MonoBehaviour
     float strenght = 90f;
     float randomness = 90f;
 
-    void Start() 
+    void Start()
     {
         gameOverCanvas.enabled = false;
         successCanvas.enabled = false;
@@ -50,32 +48,37 @@ public class PlayerBaseOffset : MonoBehaviour
 
         rbLeft = leftChild.GetComponent<Rigidbody>();
         rbRight = rightChild.GetComponent<Rigidbody>();
-    }
-
-    void Update() 
-    {
-        navMesh = GetComponent<NavMeshAgent>();
-        leftNavMesh = leftChild.GetComponent<NavMeshAgent>();
-        rightNavMesh = rightChild.GetComponent<NavMeshAgent>();
-
-        SetNavMeshBaseOffset();
 
         leftStack = leftChild.GetComponent<LeftStacker>().stack;
         rightStack = rightChild.GetComponent<RightStacker>().stack;
+    }
+
+    void Update()
+    {
+        //navMesh = GetComponent<NavMeshAgent>();
+        //leftNavMesh = leftChild.GetComponent<NavMeshAgent>();
+        //rightNavMesh = rightChild.GetComponent<NavMeshAgent>();
+
+        SetNavMeshBaseOffset();
+
+        
 
         if (leftStack.Count - rightStack.Count >= 3 || rightStack.Count - leftStack.Count >= 3)
         {
-            GetComponent<Movement>().enabled = false;
-            gameOverCanvas.enabled = true;
+            //GetComponent<Movement>().enabled = false;
+            //gameOverCanvas.enabled = true;
+            // fail oluyor
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        
-        if (other.gameObject.tag == "ObstacleCube" || other.gameObject.tag == "Stair")
+
+        if (other.gameObject.CompareTag("ObstacleCube") || other.gameObject.CompareTag("Stair"))
         {
             obstacleSize.y = other.gameObject.GetComponent<BoxCollider>().size.y;
+
+            //obstacle ýn y si alýnýyor ve stacklerin countuyla kýyaslanýyor
 
             if (obstacleSize.y <= leftStack.Count && obstacleSize.y <= rightStack.Count)
             {
@@ -89,20 +92,24 @@ public class PlayerBaseOffset : MonoBehaviour
                     }
                 }
             }
-            else if (other.gameObject.tag == "ObstacleCube")
+            else if (other.gameObject.CompareTag("ObstacleCube"))
             {
                 if (obstacleSize.y > leftStack.Count || obstacleSize.y > rightStack.Count)
                 {
-                    GetComponent<Movement>().enabled = false;
-                    gameOverCanvas.enabled = true;
+                    //GetComponent<Movement>().enabled = false;
+                    //gameOverCanvas.enabled = true;
+
+                    //fail
                 }
             }
-            else if (other.gameObject.tag == "Stair")
+            else if (other.gameObject.CompareTag("Stair"))
             {
                 if (leftStack.Count == 0 || rightStack.Count == 0)
                 {
-                    GetComponentInParent<Movement>().enabled = false;
-                    successCanvas.enabled = true;
+                    //GetComponentInParent<Movement>().enabled = false;
+                    //successCanvas.enabled = true;
+
+                    //basarrdýnn
                 }
             }
         }
@@ -112,11 +119,11 @@ public class PlayerBaseOffset : MonoBehaviour
     {
         PopedChildCubes();
 
-        if (other.gameObject.tag == "ObstacleCube")
+        if (other.gameObject.CompareTag("ObstacleCube"))
         {
-            Invoke("DelayPopedCube", delayInSeconds);
+            Invoke(nameof(DelayPopedCube), delayInSeconds);
         }
-        else if (other.gameObject.tag == "Stair") //PLAYER
+        else if (other.gameObject.CompareTag("Stair")) //PLAYER
         {
             currentNumb += 2;
             ShowStairFloatingText("X" + (currentNumb.ToString()));
@@ -158,23 +165,25 @@ public class PlayerBaseOffset : MonoBehaviour
         {
             GameObject prefab = Instantiate(floatingTextPrefab, transform.position + addPosText, Quaternion.identity);
             prefab.GetComponent<TextMesh>().text = text;
-            prefab.transform.DOShakeRotation(duration, strenght, vibrato, randomness, true).OnComplete( () => { Destroy(prefab); } );
+            prefab.transform.DOShakeRotation(duration, strenght, vibrato, randomness, true).OnComplete(() => { Destroy(prefab); });
         }
     }
 
     void SetNavMeshBaseOffset()
     {
-        if (leftNavMesh.baseOffset > rightNavMesh.baseOffset)
-        {
-            navMesh.baseOffset = leftNavMesh.baseOffset;
-        }
-        else if (rightNavMesh.baseOffset > leftNavMesh.baseOffset)
-        {
-            navMesh.baseOffset = rightNavMesh.baseOffset;
-        }
-        else if (leftNavMesh.baseOffset == rightNavMesh.baseOffset)
-        {
-            navMesh.baseOffset = rightNavMesh.baseOffset;
-        }
+        //if (leftNavMesh.baseOffset > rightNavMesh.baseOffset)
+        //{
+        //    navMesh.baseOffset = leftNavMesh.baseOffset;
+        //}
+        //else if (rightNavMesh.baseOffset > leftNavMesh.baseOffset)
+        //{
+        //    navMesh.baseOffset = rightNavMesh.baseOffset;
+        //}
+        //else if (leftNavMesh.baseOffset == rightNavMesh.baseOffset)
+        //{
+        //    navMesh.baseOffset = rightNavMesh.baseOffset;
+        //}
+
+        //hangi taraf büyükse modelin y si orasý oluyor
     }
 }
