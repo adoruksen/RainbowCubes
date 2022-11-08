@@ -11,6 +11,8 @@ namespace Character
         [SerializeReference, BoxGroup("Idle", false), HorizontalGroup("Idle/Group")] public State IdleState;
         [SerializeReference, BoxGroup("Stack", false), HorizontalGroup("Stack/Group")] public StackState StackState;
         [SerializeReference, BoxGroup("Fnsh", false), HorizontalGroup("Fnsh/Group")] public FinishState FinishState;
+        [SerializeReference, BoxGroup("Winn", false), HorizontalGroup("Winn/Group")] public State WinState;
+        [SerializeReference, BoxGroup("Fail", false), HorizontalGroup("Fail/Group")] public State FailState;
 
         [ShowInInspector, ReadOnly, BoxGroup("States", false)] public State CurrentState { get; private set; }
 
@@ -20,6 +22,7 @@ namespace Character
 
         public StackerLeft leftStacker;
         public StackerRight rightStacker;
+        public bool IsStairs { get; set; } = false;
 
         private void Awake()
         {
@@ -48,14 +51,15 @@ namespace Character
 
         public void ModelTransformSetter()
         {
+            if (IsStairs) return;
             if (leftStacker.StackController.Stack > rightStacker.StackController.Stack) ModelTransform.position = new Vector3(transform.position.x, leftStacker.StackController.Stack +.75f, transform.position.z);
             else if (rightStacker.StackController.Stack > leftStacker.StackController.Stack) ModelTransform.position = new Vector3(transform.position.x, rightStacker.StackController.Stack +.75f, transform.position.z);
             else ModelTransform.position = new Vector3(transform.position.x, rightStacker.StackController.Stack + .75f, transform.position.z); ;
         }
 
-        public void FailConditions()
+        public void FinishConditions()
         {
-            if (Mathf.Abs(leftStacker.StackController.Stack - rightStacker.StackController.Stack) >= 3) SetState(FinishState);
+            if (Mathf.Abs(leftStacker.StackController.Stack - rightStacker.StackController.Stack) >= 3) SetState(FailState);
         }
     }
 }

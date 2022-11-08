@@ -49,6 +49,12 @@ namespace StackSystem
             _renderer.material.color = color;
             _trailRenderer.transform.position = new Vector3(transform.position.x, -.4f, transform.position.z);
         }
+
+        public void SetTrailColorOnLost(Color color)
+        {
+            var _renderer = _trailRenderer.GetComponent<Renderer>();
+            _renderer.material.color = color;
+        }
     }
 }
 

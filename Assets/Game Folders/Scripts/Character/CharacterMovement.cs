@@ -27,9 +27,7 @@ namespace Character
             var playerMove = new Vector3(_input.XPos, 0, 1);
             playerMove = playerMove.normalized * moveSpeed * Time.fixedDeltaTime;
             _rigidbody.MovePosition(_rigidbody.position + playerMove);
-
-            //var movement = direction * moveSpeed;
-            //_rigidbody.velocity = movement;
+            if (UseBounds) _rigidbody.position = Bounds.ClosestPoint(_rigidbody.position);
         }
     }
 }

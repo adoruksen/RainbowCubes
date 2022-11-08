@@ -7,6 +7,7 @@ namespace StackSystem
     public class StackController : MonoBehaviour
     {
         public event Action<RainbowCube> OnStackAdded;
+        public event Action OnStackUsed;
         public event Action OnStackLost;
 
         [ShowInInspector,ReadOnly,PropertyOrder(-1)] public int Stack { get; private set; }
@@ -15,6 +16,11 @@ namespace StackSystem
         {
             Stack++;
             OnStackAdded?.Invoke(obj);
+        }
+        public void UseStack()
+        {
+            Stack--;
+            OnStackUsed?.Invoke();
         }
 
         public void LoseStack()

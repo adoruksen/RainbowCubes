@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 1546819070710402795}
   - component: {fileID: 5554965880492298491}
   - component: {fileID: 3614927561386908910}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
-  m_TagString: ObstacleCube
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

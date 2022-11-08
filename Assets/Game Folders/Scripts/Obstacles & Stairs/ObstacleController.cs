@@ -27,13 +27,17 @@ namespace Obstacles
         {
             if (_colliderYSize <= controller.StackController.Stack) 
             {
-                if (controller.StackController.Stack <= 0) return; //fail condition
+                if (controller.StackController.Stack <= 0) 
+                {
+                    controller.CharacterController.SetState(controller.CharacterController.FailState);
+                    return; 
+                } 
                 for (int i = 0; i < _colliderYSize; i++)
                 {
                     controller.StackController.LoseStack();
                     controller.Rigidbody.detectCollisions = true;
                 }
-            } 
+            }
         }
     }
 }

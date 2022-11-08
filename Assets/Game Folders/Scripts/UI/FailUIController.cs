@@ -1,4 +1,5 @@
 using Managers;
+using Managers.GameModes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace UI
     public class FailUIController : UIController<FailUIController>
     {
         [SerializeField] private Button _retryButton;
+        [SerializeField] private GameMode _gameMode;
 
         private void OnEnable()
         {
@@ -20,6 +22,7 @@ namespace UI
 
         private void RetryButtonPressed()
         {
+            GameManager.Instance.InitializeGameMode(_gameMode);
             HideInstant();
         }
     }

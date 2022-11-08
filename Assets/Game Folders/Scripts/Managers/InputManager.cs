@@ -20,8 +20,12 @@ namespace Managers
             _xPos = 0f;
             _width = (float)Screen.width / 2f;
         }
-
-        private void TouchInput()
+        private void Update()
+        {
+            if (!GameManager.Instance.IsPlaying) return;
+            TouchInput();
+        }
+        public void TouchInput()
         {
             if (Input.touchCount > 0)   //touch the screen with one finger at least
             {

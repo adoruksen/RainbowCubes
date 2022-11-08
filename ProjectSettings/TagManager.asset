@@ -4,15 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - StackableCube
-  - ObstacleCube
-  - Stair
-  - LeftStackableCube
-  - RightStackableCube
-  - LeftChild
-  - RightChild
-  - TrailLeft
-  - TrailRight
   - Character
   layers:
   - Default

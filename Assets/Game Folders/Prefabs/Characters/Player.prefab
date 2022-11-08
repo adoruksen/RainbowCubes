@@ -205,6 +205,10 @@ MonoBehaviour:
     rid: 676244866787704850
   FinishState:
     rid: 676244866787704851
+  WinState:
+    rid: 676244910324580356
+  FailState:
+    rid: 676244910324580355
   leftStacker: {fileID: 8179161007544963568}
   rightStacker: {fileID: 7527075660288754563}
   references:
@@ -216,6 +220,10 @@ MonoBehaviour:
       type: {class: StackState, ns: Character.StateMachine, asm: Assembly-CSharp}
     - rid: 676244866787704851
       type: {class: FinishState, ns: Character.StateMachine, asm: Assembly-CSharp}
+    - rid: 676244910324580355
+      type: {class: FailState, ns: Character.StateMachine, asm: Assembly-CSharp}
+    - rid: 676244910324580356
+      type: {class: WinState, ns: Character.StateMachine, asm: Assembly-CSharp}
 --- !u!114 &4287490520332795101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   IsActive: 1
-  UseBounds: 0
+  UseBounds: 1
   Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -421,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 3684508252626973097}
+  _interactorTransform: {fileID: 6759139961556352442}
 --- !u!54 &1694597244
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -671,6 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 55755482349899212}
+  _interactorTransform: {fileID: 3065902333286184163}
 --- !u!54 &2083481648
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -731,7 +741,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &539347784573994147
 MonoBehaviour:
@@ -922,7 +932,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9070467408242185177
 MonoBehaviour:
@@ -1440,6 +1450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailRenderer
       objectReference: {fileID: 0}
+    - target: {fileID: 4685205002425960467, guid: b0e64bf7de64d7240857896f123841e9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4685205002425960470, guid: b0e64bf7de64d7240857896f123841e9, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1506,6 +1520,10 @@ PrefabInstance:
     - target: {fileID: 4685205002425960467, guid: b0e64bf7de64d7240857896f123841e9, type: 3}
       propertyPath: m_Name
       value: TrailRenderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685205002425960467, guid: b0e64bf7de64d7240857896f123841e9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4685205002425960470, guid: b0e64bf7de64d7240857896f123841e9, type: 3}
       propertyPath: m_RootOrder

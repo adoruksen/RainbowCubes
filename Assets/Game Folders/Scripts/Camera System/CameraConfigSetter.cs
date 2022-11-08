@@ -13,13 +13,13 @@ namespace CameraSystem
 
         private void OnEnable()
         {
-            GameManager.OnGameStarted += OnInitialize;
-            GameManager.OnGameEnd += OnEnd;
+            GameManager.OnGameInitialized += OnInitialize;
+            GameManager.OnGameEnded += OnEnd;
         }
         private void OnDisable()
         {
-            GameManager.OnGameStarted -= OnInitialize;
-            GameManager.OnGameEnd -= OnEnd;
+            GameManager.OnGameInitialized -= OnInitialize;
+            GameManager.OnGameEnded -= OnEnd;
         }
         private void OnInitialize()
         {
@@ -34,8 +34,7 @@ namespace CameraSystem
         }
         private void RegisterPlayer()
         {
-            _registeredCharacter = CharacterManager.Instance.playerCharacter;
-            CameraController.Instance.SetTarget(_registeredCharacter.GetComponent<CameraFollowTarget>());
+            _registeredCharacter = CharacterManager.Instance.Player;
             _registeredCharacter.StackState.OnStateEntered += SetStackCamera;
         }
 

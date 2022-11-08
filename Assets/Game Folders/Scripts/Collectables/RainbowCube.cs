@@ -49,15 +49,15 @@ namespace StackSystem
 
         public void SetLost()
         {
-            transform.SetParent(null);
+            transform.SetParent(Managers.GameManager.Instance.DefaultParent);
             CharacterControllerStuff(_controller);
         }
 
         private void CharacterControllerStuff(CharacterController controller)
         {
             _controller = controller;
+            _controller.FinishConditions();
             _controller.ModelTransformSetter();
-            _controller.FailConditions();
         }
 
     }
